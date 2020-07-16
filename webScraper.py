@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import re
+import PyPDF2 as pypdf
 from weekList import List
+#from PDFtoText import convert
 
 class WebScraper:
 	def __init__(self):
@@ -10,17 +12,19 @@ class WebScraper:
 	
 	def main(self):
 		List = self.List.createList()
-		print(List)
 		url = "https://www.rentebox.nl/renteoverzicht/renteberichten.aspx?relid=863857FC-96E0-4875-82E3-902151893771"
 		page = requests.get(url)   
 		data = page.text
 		soup = BeautifulSoup(data, "html.parser")
-		#print(soup)
-		print(len(List))
 		for i in range(len(List)):
+			#Checks for href corresponding to the dates in the list.
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
-				print(link.get('id'))
-				#print(link)
-	
+				link = link.get('onclick')
+				if link.endswith(');'):
+					link = link[:-3]
+				if link.startswith('window.open('):
+					link = link[13:]
+					print(link)
+
 if __name__ == "__main__":
 	WebScraper()

@@ -9,6 +9,7 @@ class List:
 
 	def createList(self):
 		locale.setlocale(locale.LC_ALL, 'nl_NL') 
+		#Creates a list of dates for the 'lenList' upcoming days. 
 		lenList = 5
 		for i in range(lenList):
 			if i == 0:
