@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import re
 import PyPDF2 as pypdf
-from weekList import List
+from daysList import List
 from PDFtoText import Converter
 
 class WebScraper:
