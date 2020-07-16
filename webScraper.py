@@ -3,11 +3,12 @@ import requests
 import re
 import PyPDF2 as pypdf
 from weekList import List
-#from PDFtoText import convert
+from PDFtoText import Converter
 
 class WebScraper:
 	def __init__(self):
 		self.List = List()
+		self.converter = Converter()
 		WebScraper.main(self)
 	
 	def main(self):
@@ -24,7 +25,7 @@ class WebScraper:
 					link = link[:-3]
 				if link.startswith('window.open('):
 					link = link[13:]
-					print(link)
+					print(self.converter.convertPDFtoText(link))
 
 if __name__ == "__main__":
 	WebScraper()
