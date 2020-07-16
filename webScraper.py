@@ -21,11 +21,11 @@ class WebScraper:
 			#Checks for href corresponding to the dates in the list.
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
 				link = link.get('onclick')
-				if link.endswith(');'):
-					link = link[:-3]
 				if link.startswith('window.open('):
 					link = link[13:]
-					print(self.converter.convertPDFtoText(link))
+				if link.endswith(');'):
+					link = link[:-3]
+				print(self.converter.convertPDFtoText(link))
 
 if __name__ == "__main__":
 	WebScraper()
