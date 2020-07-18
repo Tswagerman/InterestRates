@@ -4,6 +4,7 @@ import re
 import PyPDF2 as pypdf
 from daysList import List
 from PDFtoText import Converter
+import io
 
 class WebScraper:
 	def __init__(self):
@@ -17,6 +18,9 @@ class WebScraper:
 		page = requests.get(url)   
 		data = page.text
 		soup = BeautifulSoup(data, "html.parser")
+		#erasing previous content
+		file = open("example.txt","w")
+		file.close()
 		for i in range(len(List)):
 			#Checks for href corresponding to the dates in the list.
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
@@ -25,7 +29,8 @@ class WebScraper:
 					link = link[13:]
 				if link.endswith(');'):
 					link = link[:-3]
-				print(self.converter.convertPDFtoText(link))
+				self.converter.convertPDFtoText(link)
+		print('DONE')
 
 if __name__ == "__main__":
 	WebScraper()
