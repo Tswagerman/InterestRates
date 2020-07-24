@@ -11,7 +11,6 @@ class WebScraper:
 		self.List = List()
 		self.converter = Converter()
 		WebScraper.main(self)
-		self.pdfList = []
 	
 	def main(self):
 		List = self.List.createList()
@@ -25,17 +24,13 @@ class WebScraper:
 		for i in range(len(List)):
 			#Checks for href corresponding to the dates in the list.
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
-				name = link.get('style')
 				link = link.get('onclick')
-				#print(name)
 				if link.startswith('window.open('):
 					link = link[13:]
 				if link.endswith(');'):
 					link = link[:-3]
-				self.pdfList = self.converter.convertPDFtoText(link)
+				self.converter.convertPDFtoText(link)
 				print('################Link done###############3')
-		print('length = ', len(self.pdfList))
-		print(self.pdfList)
 		print('DONE')
 
 if __name__ == "__main__":

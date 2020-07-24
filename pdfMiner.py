@@ -69,5 +69,4 @@ class Converter:
                 for j in range(len(self.List[i])):
                     text_file.write(self.List[i][j])
                 text_file.write('\n############END OF FILE############\n')
-        return self.List
 
