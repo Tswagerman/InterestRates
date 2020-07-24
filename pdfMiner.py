@@ -8,12 +8,11 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
 
-
-# from datetime import datetime
-# a = datetime.now()
 class Converter:
     def __init__(self):
+        #All information per file goes in here
         self.innerList = []
+        #At the end of each pdf the innerlist is appended to this list and emptied 
         self.List = []
 
     def convertPDFtoText(self, url):
@@ -60,8 +59,8 @@ class Converter:
                         if ((i+j) < len(string) and string[i+j].isalpha()):
                             number = ''
                             break
-                    i += j + 1
-            #text_file.write(string)
+                    #i is incremented with j + 1 to avoid the program to run over the same number.        
+                    #i += j + 1
             self.List.append(self.innerList)
             self.innerList = [] 
             for i in range(len(self.List)):

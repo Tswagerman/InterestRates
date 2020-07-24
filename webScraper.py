@@ -4,6 +4,7 @@ import re
 import PyPDF2 as pypdf
 from daysList import List
 from pdfMiner import Converter
+#from PDFtoText import Converter
 import io
 
 class WebScraper:
@@ -18,7 +19,7 @@ class WebScraper:
 		page = requests.get(url)   
 		data = page.text
 		soup = BeautifulSoup(data, "html.parser")
-		#erasing previous content
+		#erasing previous content in text file
 		file = open("example.txt","w")
 		file.close()
 		for i in range(len(List)):
