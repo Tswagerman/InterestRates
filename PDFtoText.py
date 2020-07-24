@@ -7,7 +7,7 @@ PERC = '%'
 class Converter:
     def __init__(self):
         self.contentsCheck = ['1','2','3','4','5','6','7','8','9','0','%']
-    #Does not work for 100% of the pdf files...
+    #Does not work for 100% of the pdf files... pdfMiner should be more accurate
     def convertPDFtoText(self, url):
         print('url = ', url)
         r = requests.get(url)
