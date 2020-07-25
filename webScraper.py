@@ -3,9 +3,11 @@ import requests
 import re
 import PyPDF2 as pypdf
 from daysList import List
-from pdfMiner import Converter
+#from pdfMiner import Converter
 #from PDFtoText import Converter
+from tabulaFile import Converter
 import io
+import pandas as pd     
 
 class WebScraper:
 	def __init__(self):

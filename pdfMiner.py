@@ -35,9 +35,14 @@ class Converter:
         device.close()
         string = retstr.getvalue()
         retstr.close()
+        print(string)
         with open("example.txt", "w", encoding="utf-8") as text_file:
             for i in range(len(string)):
-                #the file is split in single characters
+                if (string[i] == '\n' and string[i+1].isalpha()):
+                    table = ''
+                    #
+
+                #the file is split in single characters, hence the if '\n'.
                 if (string[i] == '\n' and string[i+1].isdigit()):
                     number = ''
                     #When a character in the string is part of a number it is added.
@@ -50,7 +55,8 @@ class Converter:
                             break
                         #Some files work with '.' and others with ',' to represent a comma.
                         if ((i+j) < len(string) and string[i+j] == '.'):
-                            number += string[i+j]
+                            #replacing dots with ',' for consistency
+                            number += ','
                         if ((i+j) < len(string) and string[i+j] == ','):
                             number += string[i+j]
                         if ((i+j) < len(string) and string[i+j].isdigit()):
@@ -60,7 +66,7 @@ class Converter:
                             number = ''
                             break
                     #i is incremented with j + 1 to avoid the program to run over the same number.        
-                    #i += j + 1
+                    i += j + 1
             self.List.append(self.innerList)
             self.innerList = [] 
             for i in range(len(self.List)):
