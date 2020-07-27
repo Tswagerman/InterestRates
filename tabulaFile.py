@@ -24,11 +24,18 @@ class Converter:
         # Cast to StringIO object
         fp = io.BytesIO(f)
         interpreter = PDFPageInterpreter(rsrcmgr, device)
+        #For working with the dataframe I need 'pandas'
         dfs = tabula.read_pdf(url, pages="all")
-        print(dfs)
+        #print(dfs)
+        #print('iloc = ',dfs.iloc[0])
         tabula.convert_into(url, "output.csv", output_format="csv", pages='all')
+        table = pd.read_table("output.csv", encoding="ISO-8859-1")
+        data_top = table.head()  
+        print(list(data_top.columns)) 
+        #print(data_top)
+        #print(table)
         #df2 =  tabula.read_pdf(url, encoding='utf-8', pages="all", multiple_tables=True)
-        data = pd.read_csv("output.csv",sep='delimiter', header=None, engine="python")
+        #data = pd.read_csv("output.csv",sep='delimiter', header=None, engine="python")
         #print(data)
         #print(df2)
 
