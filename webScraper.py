@@ -5,8 +5,8 @@ import PyPDF2 as pypdf
 from daysList import List
 #from pdfMiner import Converter
 #from PDFtoText import Converter
-#from tabulaFile import Converter
-from tableMaker import Converter
+from tabulaFile import Converter
+#from tableMaker import Converter
 import io
 import pandas as pd     
 
@@ -27,6 +27,7 @@ class WebScraper:
 		file.close()
 		for i in range(len(List)):
 			#Checks for href corresponding to the dates in the list.
+			#print('soup ================', soup)
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
 				link = link.get('onclick')
 				if link.startswith('window.open('):

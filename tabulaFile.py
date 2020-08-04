@@ -25,13 +25,15 @@ class Converter:
         fp = io.BytesIO(f)
         interpreter = PDFPageInterpreter(rsrcmgr, device)
         #For working with the dataframe I need 'pandas'
-        dfs = tabula.read_pdf(url, pages="all")
-        #print(dfs)
+        dfs = tabula.read_pdf(url, pages='all', encoding='ISO-8859-1', multiple_tables=True)
+        print(dfs)
+        #https://stackoverflow.com/questions/39485920/how-to-add-unicode-in-truetype0font-on-pdfbox-2-0-0/39644941
+        #https://stackoverflow.com/questions/50661750/pdfbox-throws-error-while-extracting-text-encoded-with-font-dejavu-sans-condense
         #print('iloc = ',dfs.iloc[0])
-        tabula.convert_into(url, "output.csv", output_format="csv", pages='all')
-        table = pd.read_table("output.csv", encoding="ISO-8859-1")
-        data_top = table.head()  
-        print(list(data_top.columns)) 
+        #tabula.convert_into(url, "output.csv", output_format="csv", pages='all')
+        #table = pd.read_table("output.csv", encoding="ISO-8859-1")
+        #data_top = table.head()  
+        #print(list(data_top.columns)) 
         #print(data_top)
         #print(table)
         #df2 =  tabula.read_pdf(url, encoding='utf-8', pages="all", multiple_tables=True)

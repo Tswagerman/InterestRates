@@ -35,7 +35,7 @@ class Converter:
         device.close()
         string = retstr.getvalue()
         retstr.close()
-        print(string)
+        #print(string)
         with open("example.txt", "w", encoding="utf-8") as text_file:
             for i in range(len(string)):
                 if (string[i] == '\n' and string[i+1].isalpha()):

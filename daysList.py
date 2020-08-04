@@ -10,13 +10,13 @@ class List:
 	def createList(self):
 		locale.setlocale(locale.LC_ALL, 'nl_NL') 
 		#Creates a list of dates for the 'lenList' upcoming days. 
-		lenList = 5
+		lenList = 15
 		for i in range(lenList):
 			if i == 0:
 				current = datetime.datetime.today()
-				currentTime = datetime.datetime.strftime(current,"%d %B %Y") 
+				currentTime = datetime.datetime.strftime(current,"%#d %B %Y") 
 			else:
 				current = current + datetime.timedelta(1)
-				currentTime = datetime.datetime.strftime(current,"%d %B %Y") 
+				currentTime = datetime.datetime.strftime(current,"%#d %B %Y") 
 			self.List.append(currentTime)
 		return self.List
