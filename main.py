@@ -2,13 +2,13 @@ from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import re
 import PyPDF2 as pypdf
-from daysList import List
-#from pdfMiner import Converter
-#from PDFtoText import Converter
-from tabulaFile import Converter
-#from tableMaker import Converter
 import io
-import pandas as pd     
+import os
+import shutil
+import pandas as pd  
+#complementary code  
+from daysList import List
+from PDFtoCSV import Converter 
 
 class WebScraper:
 	def __init__(self):
@@ -22,20 +22,26 @@ class WebScraper:
 		page = requests.get(url)   
 		data = page.text
 		soup = BeautifulSoup(data, "html.parser")
-		#erasing previous content in text file
-		file = open("example.txt","w")
-		file.close()
+		increment = 0
+		dirpath = 'C:/Users/Thomas/Desktop/AI 3rd year/Mortgage Interest Rates/output'
+		#Loop for deleting previous output files
+		for filename in os.listdir(dirpath):
+			filepath = os.path.join(dirpath, filename)
+			try:
+				shutil.rmtree(filepath)
+			except OSError:
+				os.remove(filepath)
 		for i in range(len(List)):
 			#Checks for href corresponding to the dates in the list.
-			#print('soup ================', soup)
 			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
 				link = link.get('onclick')
 				if link.startswith('window.open('):
 					link = link[13:]
 				if link.endswith(');'):
 					link = link[:-3]
-				self.converter.convertPDFtoText(link)
-				print('################Link done###############3')
+				self.converter.convertPDFtoCSV(link, increment)
+				increment += 1
+				print('################LINK DONE################')
 		print('DONE')
 
 if __name__ == "__main__":

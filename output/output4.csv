@@ -1,0 +1,12 @@
+Rentevastperiode,Annuïtair en lineair,Aflossingsvrij,Unnamed: 0
+1 - 2 jaar,"0,85%","1,00%",
+3 - 5 jaar,"0,86% q","1,01%",q
+6 - 10 jaar,"0,89% q","1,04%",q
+11 - 15 jaar,"1,11% q","1,26%",q
+16 - 20 jaar,"1,15% q","1,30%",q
+21 - 25 jaar,"1,43% q","1,58%",q
+26 - 30 jaar,"1,47% q","1,62%",q
+t/m 60%,t/m 80%,t/m 90%,Unnamed: 0
+,,,> 90% marktwaarde
+marktwaarde,marktwaarde,marktwaarde,
+"+ 0,20%","+ 0,30%","+ 0,50%","+ 0,80%"
