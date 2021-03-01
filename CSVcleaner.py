@@ -1,0 +1,3 @@
+
+class CsvCleaner:
+	def cleanCSV()

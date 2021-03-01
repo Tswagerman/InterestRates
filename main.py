@@ -9,11 +9,13 @@ import pandas as pd
 #complementary code  
 from daysList import List
 from PDFtoCSV import Converter 
+#from cleanCSV import Csvcleaner
 
 class WebScraper:
 	def __init__(self):
 		self.List = List()
 		self.converter = Converter()
+		#self.cleaner = CSVcleaner()
 		WebScraper.main(self)
 	
 	def main(self):
@@ -24,7 +26,7 @@ class WebScraper:
 		soup = BeautifulSoup(data, "html.parser")
 		increment = 0
 		dirpath = 'C:/Users/Thomas/Desktop/AI 3rd year/Mortgage Interest Rates/output'
-		#Loop for deleting previous output files
+		#(final product will have to compare output files with previous output files)
 		for filename in os.listdir(dirpath):
 			filepath = os.path.join(dirpath, filename)
 			try:
@@ -40,6 +42,7 @@ class WebScraper:
 				if link.endswith(');'):
 					link = link[:-3]
 				self.converter.convertPDFtoCSV(link, increment)
+				print('increment = ', increment)
 				increment += 1
 				print('################LINK DONE################')
 		print('DONE')
