@@ -14,7 +14,10 @@ from PDFtoCSV import Converter
 class WebScraper:
 	def __init__(self):
 		self.List = List()
+		self.nameList = []
+		self.linkList = []
 		self.converter = Converter()
+		self.index = 0
 		#self.cleaner = CSVcleaner()
 		WebScraper.main(self)
 	
@@ -24,7 +27,6 @@ class WebScraper:
 		page = requests.get(url)   
 		data = page.text
 		soup = BeautifulSoup(data, "html.parser")
-		increment = 0
 		dirpath = 'C:/Users/Thomas/Desktop/AI 3rd year/Mortgage Interest Rates/output'
 		#(final product will have to compare output files with previous output files)
 		for filename in os.listdir(dirpath):
@@ -35,17 +37,30 @@ class WebScraper:
 				os.remove(filepath)
 		for i in range(len(List)):
 			#Checks for href corresponding to the dates in the list.
-			for link in soup.find_all('a', href = True, text = re.compile(List[i])):
+			for link in soup.find_all('a', text = re.compile(List[i])):
+				name = str(link)
+				dictionary = ['Rentewijziging', 'Renteverhoging', 'Renteverlaging']
+				for i in range(len(dictionary)):
+					index = name.find(dictionary[i])
+					if (index > 0):
+						index += len(dictionary[i]) + 1
+						name = name[index:-4]
+						break;
 				link = link.get('onclick')
-				if link.startswith('window.open('):
-					link = link[13:]
-				if link.endswith(');'):
-					link = link[:-3]
-				self.converter.convertPDFtoCSV(link, increment)
-				print('increment = ', increment)
-				increment += 1
-				print('################LINK DONE################')
+				link = link[13:-3]
+				self.nameList.append(name)
+				self.linkList.append(link)
+
+		for i in range(len(self.linkList)):
+			print('name = ', self.nameList[i])
+			print('link = ', self.linkList[i])	
+			self.converter.convertPDFtoCSV(self.linkList[i], self.nameList[i], i)
+			print('index = ', i)
+			print('################LINK DONE################')
 		print('DONE')
+
+		
+
 
 if __name__ == "__main__":
 	WebScraper()
