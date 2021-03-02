@@ -2,7 +2,6 @@ import datetime
 from datetime import date
 import time
 import locale
-
 class List:
 	def __init__(self):
 		self.List = []
@@ -13,7 +12,7 @@ class List:
 		lenList = 15
 		for i in range(lenList):
 			if i == 0:
-				current = datetime.datetime.today()
+				current = datetime.datetime.today() 
 				currentTime = datetime.datetime.strftime(current,"%#d %B %Y") 
 			else:
 				current = current + datetime.timedelta(1)
