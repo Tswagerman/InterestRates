@@ -28,15 +28,17 @@ class WebScraper:
 		for i in range(len(dictionary)):
 			index = self.name.find(dictionary[i])
 			if (index > 0):
-				#The index is at the word in the dictionary. 
+				#The index is the element corresponding 
+				#to the start of the word in the dictionary. 
 				#To get the name, one needs to add the length of the word + one space
 				index += len(dictionary[i]) + 1
-				self.name = self.name[index:-4]
+				self.name = self.name[index:-4].replace(" ", "_")
 				break;
 
 	def moveFiles(self):
-		dirpath = 'C:/Users/Thomas/Desktop/AI 3rd year/Mortgage Interest Rates/output'
-		destpath = 'C:/Users/Thomas/Desktop/AI 3rd year/Mortgage Interest Rates/database'
+		cwd = os.getcwd() #Current working directory
+		dirpath = cwd + '/output'
+		destpath = cwd + '/database'
 		#(final product will have to compare output files with previous output files)
 		for filename in os.listdir(dirpath):
 			filepath = os.path.join(dirpath, filename)
@@ -49,6 +51,7 @@ class WebScraper:
 					shutil.rmtree(filedestination)
 				except OSError:
 					os.remove(filedestination)
+			#Moving the latest file from the output folder to the database folder
 			shutil.move(filepath, filedestination)	
 	
 	def main(self):
@@ -71,7 +74,7 @@ class WebScraper:
 			print('name :', self.nameList[i])
 			print('link :', self.linkList[i])	
 			self.converter.convertPDFtoCSV(self.linkList[i], self.nameList[i], i)
-			self.moveFiles()
+			#self.moveFiles()
 			print('index = ', i)
 			print('################LINK DONE################')
 		print('DONE')
