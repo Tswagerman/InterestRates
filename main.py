@@ -72,14 +72,14 @@ class WebScraper:
 			databaseFile = os.path.join(self.datapath, filename)
 			#if previous version is present in database, need comparison
 			if (os.path.isfile(databaseFile)):
-				self.compareCSV.compareCSV(currentFile, databaseFile) #Comparison function
+				self.compareCSV.compareCSV(currentFile, databaseFile, filename) #Comparison function
 				#remove file in database
 				try:
 					shutil.rmtree(databaseFile)
 				except OSError:
 					os.remove(databaseFile)
-				#Moving the latest file from the output folder to the database folder
-				shutil.move(currentFile, databaseFile)	
+			#Moving the latest file from the output folder to the database folder
+			shutil.move(currentFile, databaseFile)	
 
 	def removePDF(self):
 		print(colored('REMOVING ALL THE PDF FILES FROM PDF FOLDER', 'green'))

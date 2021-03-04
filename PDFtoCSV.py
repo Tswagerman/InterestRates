@@ -27,7 +27,6 @@ class Converter:
 			try:
 				tables[i].to_csv(self.outputPath + str(name) + '.csv', mode='w')
 				print(tables[i].parsing_report)
-				#tables[i].to_csv(outputPath + str(name) + '.csv', mode='w')
 			except: #later; Send a clear error message here.
 				print(colored('Something went wrong. Most likely no tables were found', 'red'))
 
