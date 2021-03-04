@@ -8,6 +8,7 @@ import shutil
 from daysList import List
 from PDFtoCSV import Converter 
 from compareCSV import CompareCSV
+from termcolor import colored
 
 class WebScraper:
 	def __init__(self):
@@ -17,42 +18,13 @@ class WebScraper:
 		self.name = ''
 		self.nameList = []
 		self.linkList = []
-		#self.cleaner = CSVcleaner()
-		WebScraper.main(self)
-		WebScraper.getName(self)
-		WebScraper.moveFiles(self)
 
-	#Function to find the company name in a string of html code.
-	def getName(self):		
-		dictionary = ['Rentewijziging', 'Renteverhoging', 'Renteverlaging']
-		for i in range(len(dictionary)):
-			index = self.name.find(dictionary[i])
-			if (index > 0):
-				#The index is the element corresponding 
-				#to the start of the word in the dictionary. 
-				#To get the name, one needs to add the length of the word + one space
-				index += len(dictionary[i]) + 1
-				self.name = self.name[index:-4].replace(" ", "_")
-				break;
-
-	def moveFiles(self):
-		cwd = os.getcwd() #Current working directory
-		dirpath = cwd + '/output'
-		destpath = cwd + '/database'
-		#(final product will have to compare output files with previous output files)
-		for filename in os.listdir(dirpath):
-			filepath = os.path.join(dirpath, filename)
-			filedestination = os.path.join(destpath, filename)
-			#if previous version is present in database, need comparison
-			if (os.path.isfile(filedestination)):
-				self.compareCSV.compareCSV(filepath, filedestination)
-				#remove file in database
-				try:
-					shutil.rmtree(filedestination)
-				except OSError:
-					os.remove(filedestination)
-			#Moving the latest file from the output folder to the database folder
-			shutil.move(filepath, filedestination)	
+		self.cwd = os.getcwd() #Current working directory
+		self.outpath = self.cwd + '\\output'
+		self.datapath = self.cwd + '\\database'
+		self.pdfpath = self.cwd + '\\pdf'
+		
+		WebScraper.main(self) #Start running program
 	
 	def main(self):
 		List = self.List.createList()
@@ -74,10 +46,49 @@ class WebScraper:
 			print('name :', self.nameList[i])
 			print('link :', self.linkList[i])	
 			self.converter.convertPDFtoCSV(self.linkList[i], self.nameList[i], i)
-			#self.moveFiles()
+			self.moveFiles() #in here the comparison function is called
 			print('index = ', i)
 			print('################LINK DONE################')
+		self.removePDF()
 		print('DONE')
+
+	#Function to find the company name in a string of html code.
+	def getName(self):		
+		dictionary = ['Rentewijziging', 'Renteverhoging', 'Renteverlaging']
+		for i in range(len(dictionary)):
+			index = self.name.find(dictionary[i])
+			if (index > 0):
+				#The index is the element corresponding 
+				#to the start of the word in the dictionary. 
+				#To get the name, one needs to add the length of the word + one space
+				index += len(dictionary[i]) + 1
+				self.name = self.name[index:-4].replace(" ", "_")
+				break
+
+	def moveFiles(self):
+		#(final product will have to compare output files with previous output files)
+		for filename in os.listdir(self.outpath):
+			currentFile = os.path.join(self.outpath, filename)
+			databaseFile = os.path.join(self.datapath, filename)
+			#if previous version is present in database, need comparison
+			if (os.path.isfile(databaseFile)):
+				self.compareCSV.compareCSV(currentFile, databaseFile) #Comparison function
+				#remove file in database
+				try:
+					shutil.rmtree(databaseFile)
+				except OSError:
+					os.remove(databaseFile)
+				#Moving the latest file from the output folder to the database folder
+				shutil.move(currentFile, databaseFile)	
+
+	def removePDF(self):
+		print(colored('REMOVING ALL THE PDF FILES FROM PDF FOLDER', 'green'))
+		for filename in os.listdir(self.pdfpath):
+			pdfFile = os.path.join(self.pdfpath, filename)
+			try:
+				shutil.rmtree(pdfFile)
+			except OSError:
+				os.remove(pdfFile)
 
 if __name__ == "__main__":
 	WebScraper()
