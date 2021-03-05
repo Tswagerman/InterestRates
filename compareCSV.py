@@ -8,7 +8,6 @@ class CompareCSV:
 	def __init__ (self):
 		self.rowStringList = []
 		self.rowIndexList = []
-		self.rowStringList2 = []
 	def compareCSV(self, currentFile, databaseFile, filename):
 		print('compare here')
 
@@ -17,31 +16,32 @@ class CompareCSV:
 		#df1 = pd.read_csv(currentFile, skiprows = skipRow)
 		#df2 = pd.read_csv(databaseFile, skiprows = skipRow)
 		with open(currentFile, 'r', newline='') as t1, open(databaseFile, 'r', newline='') as t2:
+			print('Opening files')
 			currFile = t1.readlines()
 			dataFile = t2.readlines()
 			i = 0
-			bool = False
 			index = 0
 			for row1 in currFile:
+				bool = False
 				for row2 in dataFile:
+					print('row 1 = ', row1)
+					print('row 2 = ', row2)
+					print('idx = ', index)
 					if ((row1 != row2) and (bool == False)):
+						print('bool => True')
 						bool = True
 						self.rowStringList.append(row1)
-						self.rowStringList2.append(row2)
 						self.rowIndexList.append(index)
 					if ((row1 == row2) and (bool == True)):
+						print('bool => False')
 						bool = False
 						del self.rowStringList[-1]
-						del self.rowStringList2[-1]
 						del self.rowIndexList[-1]
 						break
-					index += 1
-				index = 0
-			print('rowStringList = ', self.rowStringList)
-			print('rowStringList = ', self.rowStringList2)
+				index += 1
+			print('rowStringList = ', self.rowStringList , '\n')
 			print('rowIndexList = ', self.rowIndexList)
 			self.rowStringList.clear()
-			self.rowStringList2.clear()
 			self.rowIndexList.clear()
 		#diff = compare(
 		#	load_csv(open(databaseFile)),
