@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup, SoupStrainer
 import requests
 import re
-import io
 import os
 import shutil
 #complementary code  
@@ -12,19 +11,21 @@ from termcolor import colored
 
 class WebScraper:
 	def __init__(self):
+		#Creating a List, converter and compareCSV object from corresponding classes
 		self.List = List()
 		self.converter = Converter()
 		self.compareCSV = CompareCSV()
+
 		self.name = ''
 		self.nameList = []
 		self.linkList = []
-
-		self.cwd = os.getcwd() #Current working directory
+		#Current working directory
+		self.cwd = os.getcwd() 
 		self.outpath = self.cwd + '\\output'
 		self.datapath = self.cwd + '\\database'
 		self.pdfpath = self.cwd + '\\pdf'
-		
-		WebScraper.main(self) #Start running program
+		#Start running program
+		WebScraper.main(self) 
 	
 	def main(self):
 		List = self.List.createList()
@@ -66,13 +67,12 @@ class WebScraper:
 				break
 
 	def moveFiles(self):
-		#(final product will have to compare output files with previous output files)
 		for filename in os.listdir(self.outpath):
 			currentFile = os.path.join(self.outpath, filename)
 			databaseFile = os.path.join(self.datapath, filename)
-			#if previous version is present in database, need comparison
+			#Comparison required if previous version is present in database. 
 			if (os.path.isfile(databaseFile)):
-				self.compareCSV.compareCSV(currentFile, databaseFile, filename) #Comparison function
+				self.compareCSV.compareCSV(currentFile, databaseFile) #Comparison function
 				#remove file in database
 				try:
 					shutil.rmtree(databaseFile)

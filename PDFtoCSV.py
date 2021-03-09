@@ -1,4 +1,4 @@
-#I chose camelot over tabula and pdfminer, (camelot uses PDFminer)
+#I chose camelot over tabula and PDFminer, (camelot uses PDFminer)
 #because camelot showed the best performance with the pdf files I provided.
 import camelot 
 import os #Also imported this in main.py. Python only adds lookup time in 'sys.modules' to execution time. 
