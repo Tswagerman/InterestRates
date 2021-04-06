@@ -13,7 +13,7 @@ class List:
 		lenList = 15
 		for i in range(lenList):
 			if (i == 0):
-				current = datetime.datetime.today() 
+				current = datetime.datetime.today()
 			else:
 				current = current + datetime.timedelta(1)
 			currentTime = datetime.datetime.strftime(current,"%#d %B %Y") 

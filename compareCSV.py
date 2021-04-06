@@ -16,10 +16,11 @@ class CompareCSV:
 
 	def compareCSV(self, currentFile, databaseFile):
 		print('compare here')
-		with open(currentFile, 'r', newline='') as t1, open(databaseFile, 'r', newline='') as t2:
+		with open(currentFile, 'r', encoding="utf-8", newline='') as t1, open(databaseFile, 'r', encoding="utf-8", newline='') as t2:
 			print('Opening files')
 			currFile = t1.readlines()
 			dataFile = t2.readlines()
+			print('Opened files')
 			self.createRowLists(currFile, dataFile)
 			for index in range(len(self.rowIndexList)):
 				self.createColumnLists(self.rowStringList1[index], self.rowStringList2[index], index)
@@ -62,8 +63,10 @@ class CompareCSV:
 			index1 += 1
 
 	def getValueSpecs(self):
-		for rowIndex in range(len(self.rowStringList1)):
-			print('self.rowStringList1[rowIndex] = ', self.rowStringList1[rowIndex])
+		string = '"' + "," + '"'
+		#for row in self.rowStringList1:
+			#for column in row.split(string):
+				#print('self.rowStringList1[rowIndex] = ', column)
 
 	def clearLists(self):
 		self.rowStringList1.clear()

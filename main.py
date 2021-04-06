@@ -78,6 +78,8 @@ class WebScraper:
 					shutil.rmtree(databaseFile)
 				except OSError:
 					os.remove(databaseFile)
+			else:
+				print(colored('The database does not contain a previous file', 'green'))
 			#Moving the latest file from the output folder to the database folder
 			shutil.move(currentFile, databaseFile)	
 
