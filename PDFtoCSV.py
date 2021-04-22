@@ -14,18 +14,19 @@ class Converter:
 		os.system('color')
 
 	def convertPDFtoCSV(self, url, name, index):
-		if (name == 'Nationale_Nederlanden'):
+		#This if statement is not needed, since exept is present. Should check this.
+		#if (name == 'Nationale_Nederlanden'):
+		#	self.decryptPikePDF(url, name)
+		#	tables = camelot.read_pdf(self.pdfPath + str(name) + '.pdf', pages='all', flavor='stream') 
+		#	self.loopOverTables(tables, name)
+		#else:
+		try:
+			tables = camelot.read_pdf(url, pages='all', flavor='stream', lattice=True, split_text=True) 
+			self.loopOverTables(tables, name)
+		except:
 			self.decryptPikePDF(url, name)
 			tables = camelot.read_pdf(self.pdfPath + str(name) + '.pdf', pages='all', flavor='stream') 
 			self.loopOverTables(tables, name)
-		else:
-			try:
-				tables = camelot.read_pdf(url, pages='all', flavor='stream', lattice=True, split_text=True) 
-				self.loopOverTables(tables, name)
-			except:
-				self.decryptPikePDF(url, name)
-				tables = camelot.read_pdf(self.pdfPath + str(name) + '.pdf', pages='all', flavor='stream') 
-				self.loopOverTables(tables, name)
 
 	def loopOverTables(self, tables, name):
 		for i in range(tables.n):

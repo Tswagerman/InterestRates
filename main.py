@@ -47,7 +47,7 @@ class WebScraper:
 			print('name :', self.nameList[i])
 			print('link :', self.linkList[i])	
 			self.converter.convertPDFtoCSV(self.linkList[i], self.nameList[i], i)
-			self.moveFiles() #in here the comparison function is called
+			self.moveFiles(i) #in here the comparison function is called
 			print('index = ', i)
 			print('################LINK DONE################')
 		self.removePDF()
@@ -66,13 +66,13 @@ class WebScraper:
 				self.name = self.name[index:-4].replace(" ", "_")
 				break
 
-	def moveFiles(self):
+	def moveFiles(self, nameIndex):
 		for filename in os.listdir(self.outpath):
 			currentFile = os.path.join(self.outpath, filename)
 			databaseFile = os.path.join(self.datapath, filename)
 			#Comparison required if previous version is present in database. 
 			if (os.path.isfile(databaseFile)):
-				self.compareCSV.compareCSV(currentFile, databaseFile) #Comparison function
+				self.compareCSV.compareCSV(currentFile, databaseFile, self.nameList[nameIndex]) #Comparison function
 				#remove file in database
 				try:
 					shutil.rmtree(databaseFile)
